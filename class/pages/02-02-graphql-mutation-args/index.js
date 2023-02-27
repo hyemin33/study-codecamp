@@ -1,4 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const CREATE_BOARD = gql`
@@ -18,16 +19,28 @@ export default function GraphqlMutationPage() {
 
   const [my] = useMutation(CREATE_BOARD);
 
+  const router = useRouter();
+
   const onClickSubmit = async () => {
-    const result = await my({
-      variables: {
-        // variables 가 $ 역할을 함.
-        writer: writer, // 이 함수에 없으면 스코프 체인을 통해서 위 함수에서 찾음
-        title: title,
-        contents: contents,
-      },
-    });
-    alert(result.data.createBoard.message);
+    try {
+      const result = await my({
+        variables: {
+          // variables 가 $ 역할을 함.
+          writer: writer, // 이 함수에 없으면 스코프 체인을 통해서 위 함수에서 찾음
+          title: title,
+          contents: contents,
+        },
+      });
+      alert(result.data.createBoard.message);
+      console.log(result.data.createBoard);
+
+      //완료 후 상세페이지로 이동 시키기 추가
+      router.push(
+        `/03-03-dynamic-routed-board-query/${result.data.createBoard.number}`
+      );
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const onChangeWriter = (e) => {
