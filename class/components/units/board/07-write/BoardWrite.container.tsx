@@ -1,10 +1,15 @@
 import BoardWriteUi from "./BoardWrite.presenter";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 
-export default function BoardWrite(props) {
+interface IProps {
+  isEdit: boolean;
+  data?: any;
+}
+
+export default function BoardWrite(props: IProps) {
   const router = useRouter();
 
   const [writer, setWriter] = useState("");
@@ -34,20 +39,27 @@ export default function BoardWrite(props) {
     }
   };
 
-  const onChangeWriter = (e) => {
+  const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
     setWriter(e.target.value);
   };
 
-  const onChangeTitle = (e) => {
+  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-  const onChangeContents = (e) => {
+  const onChangeContents = (e: ChangeEvent<HTMLInputElement>) => {
     setContents(e.target.value);
   };
 
   const onClickUpdate = async () => {
     try {
-      const updateVariables = {
+      interface IUpdateVariables {
+        number: number;
+        writer?: string;
+        title?: string;
+        contents?: string;
+      }
+
+      const updateVariables: IUpdateVariables = {
         number: Number(router.query.number),
       };
       if (writer) updateVariables.writer = writer;
@@ -60,7 +72,7 @@ export default function BoardWrite(props) {
       console.log(result);
       router.push(`/06-01-boards/${result.data.updateBoard.number}`);
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
     }
   };
 

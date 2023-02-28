@@ -1,6 +1,17 @@
+import { ChangeEvent } from "react";
 import { Button } from "./BoardWrite.styles";
 
-export default function BoardWriteUi(props) {
+interface IProps {
+  onChangeWriter: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeTitle: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeContents: (e: ChangeEvent<HTMLInputElement>) => void;
+  onClickSubmit: () => void;
+  onClickUpdate: () => void;
+  isEdit: boolean;
+  data: any;
+}
+
+export default function BoardWriteUi(props: IProps) {
   console.log(props.data);
   return (
     <>
@@ -28,6 +39,7 @@ export default function BoardWriteUi(props) {
       <br />
       <Button
         onClick={props.isEdit ? props.onClickUpdate : props.onClickSubmit}
+        color="red"
       >
         {props.isEdit ? "수정" : "등록"}하기
       </Button>
