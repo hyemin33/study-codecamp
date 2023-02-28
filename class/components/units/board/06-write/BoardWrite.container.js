@@ -47,13 +47,15 @@ export default function BoardWrite(props) {
 
   const onClickUpdate = async () => {
     try {
+      const updateVariables = {
+        number: Number(router.query.number),
+      };
+      if (writer) updateVariables.writer = writer;
+      if (title) updateVariables.title = title;
+      if (contents) updateVariables.contents = contents;
+
       const result = await updateBoard({
-        variables: {
-          number: Number(router.query.number),
-          writer: writer,
-          title: title,
-          contents: contents,
-        },
+        variables: updateVariables,
       });
       console.log(result);
       router.push(`/06-01-boards/${result.data.updateBoard.number}`);
@@ -70,6 +72,7 @@ export default function BoardWrite(props) {
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
       isEdit={props.isEdit}
+      data={props.data}
     />
   );
 }
