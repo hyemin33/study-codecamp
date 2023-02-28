@@ -15,6 +15,7 @@ export default function TypeScriptBasic() {
     name: string;
     age: number | string;
     school: string;
+    hoby?: string; //있을수도있고 없을수도있을때는 ? 사용
   }
 
   const profile: IProfile = {
@@ -24,6 +25,7 @@ export default function TypeScriptBasic() {
   };
 
   profile.age = "10살";
+  profile.hoby = "수영하기";
 
   //함수타입은 어디서든 호출 가능하므로, 반드시 타입명시가 필요하다! 함수 뒤에는 return type을 명시할 수 있다.
   const handleAdd = (
