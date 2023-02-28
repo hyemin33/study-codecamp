@@ -3,13 +3,9 @@ import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
+import { IBoardWriteProps, IUpdateVariables } from "./BoardWrite.types";
 
-interface IProps {
-  isEdit: boolean;
-  data?: any;
-}
-
-export default function BoardWrite(props: IProps) {
+export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
 
   const [writer, setWriter] = useState("");
@@ -35,7 +31,7 @@ export default function BoardWrite(props: IProps) {
       //완료 후 상세페이지로 이동 시키기 추가
       router.push(`/06-01-boards/${result.data.createBoard.number}`);
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
     }
   };
 
@@ -52,13 +48,6 @@ export default function BoardWrite(props: IProps) {
 
   const onClickUpdate = async () => {
     try {
-      interface IUpdateVariables {
-        number: number;
-        writer?: string;
-        title?: string;
-        contents?: string;
-      }
-
       const updateVariables: IUpdateVariables = {
         number: Number(router.query.number),
       };

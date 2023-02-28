@@ -1,17 +1,7 @@
-import { ChangeEvent } from "react";
 import { Button } from "./BoardWrite.styles";
+import { IBoardWriteUiProps } from "./BoardWrite.types";
 
-interface IProps {
-  onChangeWriter: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChangeTitle: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChangeContents: (e: ChangeEvent<HTMLInputElement>) => void;
-  onClickSubmit: () => void;
-  onClickUpdate: () => void;
-  isEdit: boolean;
-  data: any;
-}
-
-export default function BoardWriteUi(props: IProps) {
+export default function BoardWriteUi(props: IBoardWriteUiProps) {
   console.log(props.data);
   return (
     <>
