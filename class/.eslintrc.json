@@ -1,0 +1,3 @@
+{
+  "extends": ["netxt/babel", "next/core-web-vitals"]
+}
