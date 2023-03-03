@@ -55,6 +55,7 @@ export default function StaticRoutedPage() {
   const onClickNextPage = (e: MouseEvent<HTMLSpanElement>) => {
     if (startPage + 10 <= lastPage) return;
 
+    console.log("");
     setStartPage(startPage + 10);
     void refetch({ page: startPage + 10 });
   };
