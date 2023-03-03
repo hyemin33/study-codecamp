@@ -2,12 +2,16 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export default function openapiWithUseEffectaPage() {
-  const [data, setData] = useState("");
+  const [data, setData] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchDog = async () => {
-      const result = await axios.get("https://dog.ceo/api/breeds/image/random");
-      setData(result.data.message);
+      new Array(9).fill(1).forEach(async (_) => {
+        const result = await axios.get(
+          "https://dog.ceo/api/breeds/image/random"
+        );
+        setData((prev) => [...prev, result.data.message]);
+      });
     };
 
     void fetchDog();
@@ -15,7 +19,9 @@ export default function openapiWithUseEffectaPage() {
 
   return (
     <>
-      <img src={data} />
+      {data.map((el, index) => (
+        <img src={el} key={index} />
+      ))}
     </>
   );
 }
