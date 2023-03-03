@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>this의 이해</title>
+    <script>
+      class Counter {
+        count = 10;
+
+        //방법1 화살표 함수로 병경해서 사용하면 .bind가 됨
+        onClickButton() {
+          console.log("현재 카운트:", this.count);
+        }
+
+        render() {
+          const button = document.createElement("button");
+          button.innerText = "클릭하세요";
+          //방법2 연결되어 있는 count this를 사용하게 해줘 => .bind(this)
+          button.addEventListener("click", this.onCLickButton.bind(this));
+          documment.body.appendChild(button);
+        }
+      }
+
+      window.onload = function () {
+        const counter = new Counter();
+        conter.render();
+      };
+    </script>
+  </head>
+  <body></body>
+</html>
