@@ -1,6 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import { Modal } from "antd";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
+import { checkValidationFile } from "../../src/commons/libraries/validationFile";
 import {
   IMutation,
   IMutaionUploadFileArgs,
@@ -15,6 +16,7 @@ const UPLOAD_FILE = gql`
 `;
 
 export default function ImageUploadPage() {
+  const fileRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState("");
 
   const [uploadFile] = useMutation<
@@ -26,6 +28,9 @@ export default function ImageUploadPage() {
     const file = e.target.files?.[0];
     console.log(file);
 
+    const isValid = checkValidationFile(file);
+    if (!isValid) return;
+
     try {
       const result = await uploadFile({ variables: { file } });
       setImageUrl(result?.data?.uploadFile?.url ?? "");
@@ -34,9 +39,19 @@ export default function ImageUploadPage() {
     }
   };
 
+  const onClickImage = () => {
+    fileRef.current?.click();
+  };
+
   return (
     <>
-      <input type="file" onChange={onChangeFile} />
+      <div
+        style={{ width: "100px", height: "30px", background: "gray" }}
+        onClick={onClickImage}
+      >
+        이미지버튼
+      </div>
+      <input type="file" onChange={onChangeFile} ref={fileRef} />
       <img src={`https://storage.googleapis.com/` + imageUrl} />
     </>
   );
