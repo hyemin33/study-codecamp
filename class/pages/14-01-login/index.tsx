@@ -45,6 +45,7 @@ export default function LoginPage() {
         return;
       }
       setAccessToken(accessToken);
+      localStorage.setItem("accessToken", accessToken);
 
       void router.push(`/14-02-login-success`);
     } catch (error) {
