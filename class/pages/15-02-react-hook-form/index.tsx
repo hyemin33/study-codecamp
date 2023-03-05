@@ -1,9 +1,15 @@
 import { useForm } from "react-hook-form";
 
-export default function ReactHookFormPage() {
-  const { register, handleSubmit } = useForm();
+interface IFormData {
+  writer: string;
+  title: string;
+  contents: string;
+}
 
-  const onClickSubmit = (data: any) => {
+export default function ReactHookFormPage() {
+  const { register, handleSubmit } = useForm<IFormData>();
+
+  const onClickSubmit = (data: IFormData) => {
     console.log(data);
   };
 
@@ -17,8 +23,8 @@ export default function ReactHookFormPage() {
       <input type="text" {...register("title")} />
       내용:
       <input type="text" {...register("contents")} />
-      주소:
-      <input type="text" {...register("boardAddress.addressDetail")} />
+      {/* 주소:
+      <input type="text" {...register("boardAddress.addressDetail")} /> */}
       <button>보내기</button>
     </form>
   );
