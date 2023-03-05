@@ -15,5 +15,5 @@ export default function LoginSuccessPage() {
   const { data } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGED_IN);
 
-  return <>{data?.fetchUserLoggedIn.name}님 환영합니다!</>;
+  return <>{data?.fetchUserLoggedIn?.name}님 환영합니다!</>;
 }

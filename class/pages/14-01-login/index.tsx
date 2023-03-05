@@ -4,10 +4,6 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../src/commons/store";
-import {
-  IMutation,
-  IMutationLoginUserArgs,
-} from "../../src/commons/types/generated/types";
 
 const LOGIN_USER = gql`
   mutation loginUser($email: String!, $password: String!) {
