@@ -1,14 +1,11 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Input01 from "../../src/components/commons/inputs/01";
-import Button from "../../src/components/commons/buttons";
 
 const schema = yup.object({
   writer: yup.string().required("작성자를 입력해주세요."),
   title: yup.string().required("제목을 입력해주세요."),
   contents: yup.string().required("내용를 입력해주세요."),
-  password: yup.string().required("비밀번호를 입력해주세요"),
 
   //   email: yup
   //     .string()
@@ -28,7 +25,6 @@ interface IFormData {
   writer: string;
   title: string;
   contents: string;
-  password: string;
 }
 
 export default function ReactHookFormPage() {
@@ -46,20 +42,19 @@ export default function ReactHookFormPage() {
   return (
     <form onSubmit={handleSubmit(onClickSubmit)}>
       작성자:
-      <Input01 type="text" register={register("writer")} />
+      <input type="text" {...register("writer")} />
       <div>{formState.errors.writer?.message}</div>
       제목:
-      <Input01 type="text" register={register("title")} />
+      <input type="text" {...register("title")} />
       <div>{formState.errors.title?.message}</div>
       내용:
-      <Input01 type="text" register={register("contents")} />
+      <input type="text" {...register("contents")} />
       <div>{formState.errors.contents?.message}</div>
-      비밀번호:
-      <Input01 type="password" register={register("password")} />
-      <div>{formState.errors.password?.message}</div>
       {/* 주소:
-      <Input01 aaa={register("boardAddress.addressDetail")} /> */}
-      <Button isActive={formState.isValid} title="등록하기" />
+      <input type="text" {...register("boardAddress.addressDetail")} /> */}
+      <button style={{ backgroundColor: formState.isValid ? "yellow" : "" }}>
+        보내기
+      </button>
     </form>
   );
 }
