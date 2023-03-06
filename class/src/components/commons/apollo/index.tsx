@@ -3,12 +3,11 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloLink,
-  gql,
   fromPromise,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { createUploadLink } from "apollo-upload-client";
-import { GraphQLClient } from "graphql-request";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { getAccessToken } from "../../../commons/libraries/getAccessToken";
 import { accessTokenState } from "../../../commons/store";
@@ -22,6 +21,12 @@ interface IApolloSettingProps {
 
 export default function ApolloSetting(props: IApolloSettingProps) {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+
+  useEffect(() => {
+    getAccessToken().then((newAccessToken) => {
+      setAccessToken(newAccessToken);
+    });
+  }, []);
 
   const errorLink = onError(({ graphQLErrors, operation, forward }) => {
     // 1-1 에러 캐치
