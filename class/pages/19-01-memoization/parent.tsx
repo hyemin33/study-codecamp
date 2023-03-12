@@ -48,7 +48,9 @@ export default function MemoiationParentPage() {
         =====위의 state가 리렌더링 될때마다 아래 자식 컴포넌트도 리렌더링 되는게
         문제다.===
       </div>
-      <MemoizationChildPage />
+
+      {/* 의존성 추가 countState  */}
+      <MemoizationChildPage countState={countState} />
     </>
   );
 }
