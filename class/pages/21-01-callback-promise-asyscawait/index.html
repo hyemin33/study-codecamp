@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>콜백과 친구들</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      // function addEventListener(aaa, qqq) {
+      //   if (aaa) {
+      //     const result = "철수";
+      //     qqq(result);
+      //   }
+      // }
+
+      const myCallback = () => {
+        const aa = new XMLHttpRequest();
+        aa.open("get", "http://numbersapi.com/random?main=1&max-200");
+        aa.send();
+        aa.addEventListener("load", function (res) {
+          console.log(res);
+          const num = res.target.response.split(" ")[0]; // 랜덤한 숫자
+
+          const bb = new XMLHttpRequest();
+          bb.open("get", `https://koreanjson.com/posts/${numb}`);
+          bb.send();
+          bb.addEventListener("load", (res) => {
+            console.log(res);
+            const userId = JSON.parse(res.target.response).UserId;
+          });
+
+          const cc = new XMLHttpRequest();
+          cc.open("get", `https://koreanjson.com/posts?userId=${userId}`);
+          cc.send();
+          cc.addEventListener("load", (res) => {
+            console.log(res);
+          });
+        });
+      };
+
+      // new Promise((resolve, reject) => {
+      //   // 여기서 API 요청을 한다면?
+      //   // 성공하면 resolve 실행
+      //   try {
+      //     const result = "철수";
+      //     resolve(result);
+      //   } catch (error) {
+      //     reject(error + "실패했습니다.");
+      //   }
+      // })
+      //   .then((res) => {
+      //     console.log(res); // 철수가 나옴
+      //   })
+      //   .catch((err) => {
+      //     console.log(err); // error + "실패했습니다." 가 나옴
+      //   });
+
+      // axios 의 return 값은 promise이다.
+
+      // then 이후 return 을 붙이면 다음 axios에 then을 붙여 쓸 수 있다.
+      // promise로 callback 지옥은 개선했으나 실행순서를 예측하기 어렵다는 단점이 있다.
+      const myPromise = () => {
+        console.log("1번");
+        axios
+          .get("http://numbersapi.com/random?main=1&max-200")
+          .then((res) => {
+            console.log("2번");
+            return axios.get("http://numbersapi.com/random?main=1&max-200");
+          })
+          .then((res) => {
+            console.log("3번");
+            return axios.get("http://numbersapi.com/random?main=1&max-200");
+          })
+          .then(() => {
+            console.log("4번");
+            // res 최종 결과
+          });
+        console.log("5번");
+      };
+
+      // axios, fetch 등 대표적인 Promise (.then 등의 기능)를 지원하는 기능
+      // axios, fetch 등을 기다리는 2가지 방법
+      // 1. .then() 활용
+      // 2. await 활용 => await는 아무데나 붙인다고 뒤에껄 기다리는게 아님. promise 앞에 붙여야 await (기다려준다)
+      const myAsyncAwait = async () => {
+        await axios.get("http://numbersapi.com/random?main=1&max-200");
+        await axios.get("http://numbersapi.com/random?main=1&max-200");
+        await axios.get("http://numbersapi.com/random?main=1&max-200");
+      };
+    </script>
+  </head>
+  <body>
+    <button onClick="myCallback()">Callback 연습하기!!</button>
+    <button onClick="myPromise()">Promise 연습하기!!</button>
+    <button onClick="myAsyncAwait()">AsyncAwait 연습하기!!</button>
+  </body>
+</html>
